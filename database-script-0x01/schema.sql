@@ -1,17 +1,17 @@
 CREATE TABLE User (
-    user_id BINARY(16) PRIMARY KEY,
+    user_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(20) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     password_hash VARCHAR(256) NOT NULL,
     phone_number VARCHAR(10),
     role ENUM('guest', 'host', 'admin') NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 );
 
 CREATE TABLE Property (
-    property_id BINARY(16) PRIMARY KEY,
-    host_id BINARY(16) NOT NULL,
+    property_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    host_id CHAR(36) NOT NULL,
     name VARCHAR(100) NOT NULL,
     description TEXT,
     location VARCHAR(50) NOT NULL,
@@ -23,9 +23,9 @@ CREATE TABLE Property (
 );
 
 CREATE TABLE Booking (
-    booking_id  BINARY(16) PRIMARY KEY,
-    property_id BINARY(16) NOT NULL,
-    user_id BINARY(16) NOT NULL,
+    booking_id  CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    property_id CHAR(36) NOT NULL,
+    user_id CHAR(36) NOT NULL,
     start_date TIMESTAMP NOT NULL,
     end_date TIMESTAMP NOT NULL,
     total_price DECIMAL(5,2) NOT NULL,
@@ -38,8 +38,8 @@ CREATE TABLE Booking (
 );
 
 CREATE TABLE Payment (
-    payment_id BINARY(16) PRIMARY KEY,
-    booking_id BINARY(16),
+    payment_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    booking_id CHAR(36) NOT NULL,
     amount DECIMAL(5,2) NOT NULL,
     payment_date TIMESTAMP NOT NULL,
     payment_method ENUM('card', 'paypal', 'bank') NOT NULL,
@@ -48,9 +48,9 @@ CREATE TABLE Payment (
 );
 
 CREATE TABLE Review (
-    review_id BINARY(16) PRIMARY KEY,
-    property_id BINARY(16),
-    user_id BINARY(16),
+    review_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    property_id CHAR(36) NOT NULL,
+    user_id CHAR(36) NOT NULL,
     rating INTEGER CHECK (rating BETWEEN 1 AND 5),
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -60,9 +60,9 @@ CREATE TABLE Review (
 );
 
 CREATE TABLE Message (
-    message_id BINARY(16),
-    sender_id BINARY(16),
-    recipient_id BINARY(16),
+    message_id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    sender_id CHAR(36) NOT NULL,
+    recipient_id CHAR(36) NOT NULL,
     message_body TEXT NOT NULL,
     send_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   
