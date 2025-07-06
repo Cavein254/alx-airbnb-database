@@ -1,4 +1,5 @@
 -- Initial Complex Query
+EXPLAIN
 SELECT
     bookings.*,
     users.name AS user_name,
@@ -18,6 +19,7 @@ WHERE
 
 
 -- Refactored Optimized Query
+EXPLAIN
 SELECT 
     b.id AS booking_id,
     u.name AS user_name,
