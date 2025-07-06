@@ -22,7 +22,10 @@ FROM
     bookings
 JOIN users ON bookings.user_id = users.id
 JOIN properties ON bookings.property_id = properties.id
-JOIN payments ON payments.booking_id = bookings.id;
+JOIN payments ON payments.booking_id = bookings.id
+WHERE
+    bookings.id IS NOT NULL
+    AND users.id IS NOT NULL;
 ```
 
 ## 📊 Performance Analysis (Before)
