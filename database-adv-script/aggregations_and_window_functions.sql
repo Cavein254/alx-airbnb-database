@@ -15,4 +15,5 @@ SELECT
 FROM 
     bookings
 GROUP BY 
-    property_id;
+    property_id
+ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS booking_rank;
